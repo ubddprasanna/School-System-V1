@@ -35,7 +35,9 @@ public class SchoolManagementSystem {
                 case 4 -> System.out.println("Navigating to Library Reports...");
                 case 0 -> {
                     System.out.println("Thank you for using the School Management System. Goodbye!");
+                    input.close();
                     return;
+
                 }
                 default -> System.out.println("Invalid choice. Please enter a number between 0 and 4.");
 
