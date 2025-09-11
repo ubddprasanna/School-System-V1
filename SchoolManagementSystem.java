@@ -37,8 +37,9 @@ public class SchoolManagementSystem {
                     System.out.println("Thank you for using the School Management System. Goodbye!");
                     return;
                 }
+                default -> System.out.println("Invalid choice. Please enter a number between 0 and 4.");
+
             }
-;
 
         }
     }
