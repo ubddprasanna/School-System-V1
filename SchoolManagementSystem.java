@@ -27,10 +27,18 @@ public class SchoolManagementSystem {
             System.err.print("Enter your choice: ");
             int userInput = input.nextInt();
 
-            if (userInput == 0) {
-                System.out.println("Thank you for using the School Management System. Goodbye!");
-                break;
-            };
+
+            switch (userInput) {
+                case 1 -> System.out.println("Navigating to Student Management...");
+                case 2 -> System.out.println("Navigating to Teacher Management...");
+                case 3 -> System.out.println("Navigating to Library Management...");
+                case 4 -> System.out.println("Navigating to Library Reports...");
+                case 0 -> {
+                    System.out.println("Thank you for using the School Management System. Goodbye!");
+                    return;
+                }
+            }
+;
 
         }
     }
