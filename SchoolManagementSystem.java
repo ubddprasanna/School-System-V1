@@ -49,9 +49,9 @@ public class SchoolManagementSystem {
     }
 
     public static void students() {
-        int[] ID = new int[100];
-        int[] marks = new int[100];
-        String[] name = new String[100];
+        int[] ID = new int[3];
+        int[] marks = new int[3];
+        String[] name = new String[3];
 
         while (true) {
             Scanner input = new Scanner(System.in);
@@ -69,26 +69,55 @@ public class SchoolManagementSystem {
                     // ................ Debuging codes......
                     // System.out.println("switch (userInput) : case 1 Entered ");
                     // ...............................
-
                     for (int i = 0; i < (ID.length); i++) {
-                        // ................ Debuging codes......
-                        // System.out.println("switch (userInput) : case 1 : for (int i = 0; i < (100);
-                        // i++) Entered ");
-                        // System.out.println("ID: " + ID[i] );
-                        // .......................................
-                        if ((ID[i] == 0) && (name[i] == null) && (marks[i] == 0)) {
-                            System.out.print("Enter Student ID: ");
-                            ID[i] = input.nextInt();
-                            input.nextLine();
+                        int stCount = 0;
+                        while (true) {
+                            if ((ID[stCount] != 0) || (name[stCount] != null) || (marks[stCount] != 0)) {
+                                stCount++;
+                                if (stCount == ID.length) {
+                                    // ................ Debuging code/s......
+                                    //System.out.println("Array already Full. loop going to safe break, Final stCount " + stCount);
+                                    //.....................................
+                                    break;
 
-                            System.out.print("Enter Student Name: ");
-                            name[i] = input.nextLine();
-
-                            System.out.print("Enter Student Marks: ");
-                            marks[i] = input.nextInt();
-                            System.out.println();
-                            break;
+                                }
+                                // ................ Debuging code/s......
+                                //System.out.println("stCount Entered " + stCount);
+                                // ................ Debuging code/s......
+                            } else {
+                                // ................ Debuging code/s......
+                                //System.out.println("sys going to brake, Final stCount " + stCount);
+                                //..........................
+                                break;
+                            }
                         }
+                        // ................ Debuging code/s......
+                        //System.out.println("stCount < ID.length = " + stCount + "<" + ID.length);
+                        //............................
+
+                        if (stCount < ID.length) {
+                            // ................ Debuging codes......
+                            // System.out.println("switch (userInput) : case 1 : for (int i = 0; i < (100);
+                            // i++) Entered ");
+                            // System.out.println("ID: " + ID[i] );
+                            // .......................................
+                            if ((ID[i] == 0) && (name[i] == null) && (marks[i] == 0)) {
+                                System.out.print("Enter Student ID: ");
+                                ID[i] = input.nextInt();
+                                input.nextLine();
+
+                                System.out.print("Enter Student Name: ");
+                                name[i] = input.nextLine();
+
+                                System.out.print("Enter Student Marks: ");
+                                marks[i] = input.nextInt();
+                                System.out.println();
+                                break;
+                            }
+                        } else {
+                            System.err.println("Error: Cannot add more students. The database is full.");
+                        }
+
                     }
                 }
 
