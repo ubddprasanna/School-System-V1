@@ -76,24 +76,25 @@ public class SchoolManagementSystem {
                                 stCount++;
                                 if (stCount == ID.length) {
                                     // ................ Debuging code/s......
-                                    //System.out.println("Array already Full. loop going to safe break, Final stCount " + stCount);
-                                    //.....................................
+                                    // System.out.println("Array already Full. loop going to safe break, Final
+                                    // stCount " + stCount);
+                                    // .....................................
                                     break;
 
                                 }
                                 // ................ Debuging code/s......
-                                //System.out.println("stCount Entered " + stCount);
+                                // System.out.println("stCount Entered " + stCount);
                                 // ................ Debuging code/s......
                             } else {
                                 // ................ Debuging code/s......
-                                //System.out.println("sys going to brake, Final stCount " + stCount);
-                                //..........................
+                                // System.out.println("sys going to brake, Final stCount " + stCount);
+                                // ..........................
                                 break;
                             }
                         }
                         // ................ Debuging code/s......
-                        //System.out.println("stCount < ID.length = " + stCount + "<" + ID.length);
-                        //............................
+                        // System.out.println("stCount < ID.length = " + stCount + "<" + ID.length);
+                        // ............................
 
                         if (stCount < ID.length) {
                             // ................ Debuging codes......
@@ -123,11 +124,17 @@ public class SchoolManagementSystem {
 
                 case 2 -> {
                     System.out.println("--- Student List ---");
+                    System.out.println("+---------+---------------------+---------+");
+                    System.out.printf("| %-7s | %-19s | %-7s |\n", "ID", "Name", "Marks");
+                    System.out.println("+---------+---------------------+---------+");
                     for (int i = 0; i < (ID.length); i++) {
                         if ((ID[i] != 0) || (name[i] != null) || (marks[i] != 0)) {
-                            System.out.println("ID: " + ID[i] + ", Name: " + name[i] + ", Marks: " + marks[i]);
+                            // System.out.println("ID: " + ID[i] + ", Name: " + name[i] + ", Marks: " +
+                            // marks[i]);
+                            System.out.printf("| %-7d | %-19s | %-7d |\n", ID[i], name[i], marks[i]);
                         }
                     }
+                    System.out.println("+---------+---------------------+---------+");
                     System.out.println();
                 }
 
