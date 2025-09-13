@@ -1,5 +1,7 @@
 
 import java.util.Scanner;
+import utils.Greeter;
+import utils.StudentIO;
 
 public class SchoolManagementSystem {
 
@@ -9,8 +11,7 @@ public class SchoolManagementSystem {
 
     public static void main(String[] args) {
 
-        System.out.println("Welcome to CyberCrewz Academy \nSchool Management System V1 \nCode Name River ");
-
+        Greeter.sayHello();
         menu();
 
     }
@@ -127,19 +128,13 @@ public class SchoolManagementSystem {
                 }
 
                 case 2 -> {
-                    System.out.println("--- Student List ---");
-                    System.out.println("+---------+---------------------+---------+");
-                    System.out.printf("| %-7s | %-19s | %-7s |\n", "ID", "Name", "Marks");
-                    System.out.println("+---------+---------------------+---------+");
+                    StudentIO.header("Student List");
                     for (int i = 0; i < (ID.length); i++) {
                         if ((ID[i] != 0) || (name[i] != null) || (marks[i] != 0)) {
-                            // System.out.println("ID: " + ID[i] + ", Name: " + name[i] + ", Marks: " +
-                            // marks[i]);
-                            System.out.printf("| %-7d | %-19s | %-7d |\n", ID[i], name[i], marks[i]);
+                            StudentIO.printRow(ID[i], name[i], marks[i]);
                         }
                     }
-                    System.out.println("+---------+---------------------+---------+");
-                    System.out.println();
+                    StudentIO.footer();
                 }
 
                 case 3 -> {
@@ -148,20 +143,31 @@ public class SchoolManagementSystem {
                     System.out.println();
                     int index = indexSearch(stID);
                     if (index == -1) {
-                        System.out.print("Error: Student with ID:" + stID + " not found.");
+                        StudentIO.printNotFoundError(stID);
                     } else {
-                        System.out.println("--- Student Found ---");
-                        System.out.println("+---------+---------------------+---------+");
-                        System.out.printf("| %-7s | %-19s | %-7s |\n", "ID", "Name", "Marks");
-                        System.out.println("+---------+---------------------+---------+");
-                        System.out.printf("| %-7d | %-19s | %-7d |\n", ID[index], name[index], marks[index]);
-                        System.out.println("+---------+---------------------+---------+");
-                        System.out.println();
+                        StudentIO.header("Student Found");
+                        StudentIO.printRow(ID[index], name[index], marks[index]);
+                        StudentIO.footer();
                     }
 
                 }
 
-
+                case 4 -> {
+                    System.out.print("Enter the Student ID to update: ");
+                    int stID = safeInt();
+                    System.out.println();
+                    int index = indexSearch(stID);
+                    if (index == -1) {
+                        System.out.println("Error: Student with ID:" + stID + " not found.");
+                    } else {
+                        System.out.println("Found Student : " + name[index]+ "(Current Marks: " + marks[index]+ " )");
+                        System.out.print("Enter new marks: ");
+                        marks[index] = safeInt();
+                        System.out.println();
+                        System.out.println("Student marks updated successfully!");
+                        System.out.println();
+                    }
+                }
 
                 case 0 -> {
                     System.out.println("Exiting to main");
