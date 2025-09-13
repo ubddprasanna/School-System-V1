@@ -3,6 +3,10 @@ import java.util.Scanner;
 
 public class SchoolManagementSystem {
 
+    static int[] ID = new int[3];
+    static int[] marks = new int[3];
+    static String[] name = new String[3];
+
     public static void main(String[] args) {
 
         System.out.println("Welcome to CyberCrewz Academy \nSchool Management System V1 \nCode Name River ");
@@ -49,15 +53,15 @@ public class SchoolManagementSystem {
     }
 
     public static void students() {
-        int[] ID = new int[3];
-        int[] marks = new int[3];
-        String[] name = new String[3];
 
         while (true) {
-            try (Scanner input = new Scanner(System.in)) {
+            Scanner input = new Scanner(System.in);
                 System.out.println("""
                         1. Add a New Student
                         2. List All Students
+                        3. Search for a Student by ID
+                        4. Update a Student's Marks
+                        5. Delete a Student
                         0. Back to Main Menu
                         """);
                 System.out.print("Enter your choice:");
@@ -138,13 +142,17 @@ public class SchoolManagementSystem {
                         System.out.println();
                     }
 
+                    case 3 -> {
+
+                    }
+
                     case 0 -> {
                         System.out.println("Exiting to main");
                         // input.close();
                         return;
                     }
                 }
-            }
+
         }
 
     }
@@ -156,7 +164,7 @@ public class SchoolManagementSystem {
 
         while (!valid) {
             if (input.hasNextInt()) {
-                number = input.nextInt(); 
+                number = input.nextInt();
                 valid = true;
             } else {
                 System.out.println("Required Integer");
