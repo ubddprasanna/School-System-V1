@@ -1,18 +1,26 @@
 
 import java.util.Scanner;
+import utils.GradeCalc;
 import utils.Greeter;
+import utils.SafeInputReader;
 import utils.StudentIO;
 
 public class SchoolManagementSystem {
 
     static int[] ID = new int[3];
-    static int[] marks = new int[3];
+    static double[] marks = new double[3];
+    static int[] endXmarks = new int[3];
+    static int[] midXmarks = new int[3];
+    static int[] hwMarks = new int[3];
     static String[] name = new String[3];
 
-    public static void main(String[] args) {
+    static double finalExamW = 0.6;
+    static double midExamW = 0.3;
+    static double homeWorkW = 0.1;
 
+    public static void main(String[] args) {
         Greeter.sayHello();
-        menu();
+         menu();
 
     }
 
@@ -26,11 +34,11 @@ public class SchoolManagementSystem {
                     2. Teacher Management
                     3. Library Management
                     4. Reports
+                    5. Grading Scheme Configuration
                     0. Exit
                     """);
 
-            System.err.print("Enter your choice: ");
-            int userInput = safeInt();
+            int userInput = SafeInputReader.intInput("Enter your choice: ", 0, 5);
 
             switch (userInput) {
                 case 1 -> {
@@ -40,13 +48,31 @@ public class SchoolManagementSystem {
                 case 2 -> System.out.println("---Navigating to Teacher Management---");
                 case 3 -> System.out.println("---Navigating to Library Management---");
                 case 4 -> System.out.println("---Navigating to Library Reports---");
+                case 5 -> {
+                    System.out.println("--- Grading Scheme Setup ---");
+                    System.out.println(
+                            "You will define the components of the final grade. \nAll weights must sum to 1.0 (e.g., 0.6 for 60%). \n ");
+                    while (true) {
+                        finalExamW = SafeInputReader.floatInput("Enter weight for 'Final Exam': ", 0.0, 1.0);
+                        midExamW = SafeInputReader.floatInput("Enter weight for 'Midterm Exam': ", 0.0, 1.0);
+                        homeWorkW = SafeInputReader.floatInput("Enter weight for 'Home works': ", 0.0, 1.0);
+
+                        if (finalExamW + midExamW + homeWorkW == 1.0) {
+                            System.out.println("Success! Grading scheme has been configured for this session.");
+                            break;
+                        } else {
+                            System.out.println("All weights must sum to 1.0");
+                            System.out.println("Enter again.. ! \n");
+                        }
+
+                    }
+                }
                 case 0 -> {
                     System.out.println("Thank you for using the School Management System. Goodbye!");
                     input.close();
                     return;
 
                 }
-                default -> System.out.println("Invalid choice. Please enter a number between 0 and 4.");
 
             }
 
@@ -65,65 +91,48 @@ public class SchoolManagementSystem {
                     5. Delete a Student
                     0. Back to Main Menu
                     """);
-            System.out.print("Enter your choice:");
-            int userInput = input.nextInt();
+            int userInput = SafeInputReader.intInput("Enter your choice:", 0, 5);
             System.out.println();
 
             switch (userInput) {
                 case 1 -> {
-                    // ................ Debuging codes......
-                    // System.out.println("switch (userInput) : case 1 Entered ");
-                    // ...............................
                     for (int i = 0; i < (ID.length); i++) {
                         int stCount = 0;
                         while (true) {
                             if ((ID[stCount] != 0) || (name[stCount] != null) || (marks[stCount] != 0)) {
                                 stCount++;
                                 if (stCount == ID.length) {
-                                    // ................ Debuging code/s......
-                                    // System.out.println("Array already Full. loop going to safe break, Final
-                                    // stCount " + stCount);
-                                    // .....................................
                                     break;
 
                                 }
-                                // ................ Debuging code/s......
-                                // System.out.println("stCount Entered " + stCount);
-                                // ................ Debuging code/s......
                             } else {
-                                // ................ Debuging code/s......
-                                // System.out.println("sys going to brake, Final stCount " + stCount);
-                                // ..........................
                                 break;
                             }
                         }
-                        // ................ Debuging code/s......
-                        // System.out.println("stCount < ID.length = " + stCount + "<" + ID.length);
-                        // ............................
 
                         if (stCount < ID.length) {
-                            // ................ Debuging codes......
-                            // System.out.println("switch (userInput) : case 1 : for (int i = 0; i < (100);
-                            // i++) Entered ");
-                            // System.out.println("ID: " + ID[i] );
-                            // .......................................
+
                             if ((ID[i] == 0) && (name[i] == null) && (marks[i] == 0)) {
-                                System.out.print("Enter Student ID: ");
-                                ID[i] = input.nextInt();
-                                input.nextLine();
+                                ID[i] = SafeInputReader.intInput("Enter Student ID: ", 1, 1000);
+                                name[i] = SafeInputReader.strInput("Enter Student Name: ");
+                                endXmarks[i] = SafeInputReader.intInput("Enter Student Final Exam Marks: ", 0, 100);
+                                midXmarks[i] = SafeInputReader.intInput("Enter Student Mid Exam Marks: ", 0, 100);
+                                hwMarks[i] = SafeInputReader.intInput("Enter Student Homw work Marks: ", 0, 100);
+                                //marks[i] = (endXmarks[i] * finalExamW + midXmarks[i] * midExamW + hwMarks[i] * homeWorkW);
 
-                                System.out.print("Enter Student Name: ");
-                                name[i] = input.nextLine();
+                                int[] studentMarks = { endXmarks[i], midXmarks[i], hwMarks[i] };
 
-                                System.out.print("Enter Student Marks: ");
-                                marks[i] = input.nextInt();
+                                double[] marksWeighr = { finalExamW, midExamW, homeWorkW };
+
+                                marks[i] = GradeCalc.main(studentMarks, marksWeighr, hwMarks.length);
+
+
                                 System.out.println();
                                 break;
                             }
                         } else {
                             System.err.println("Error: Cannot add more students. The database is full.");
                         }
-
                     }
                 }
 
@@ -131,7 +140,7 @@ public class SchoolManagementSystem {
                     StudentIO.header("Student List");
                     for (int i = 0; i < (ID.length); i++) {
                         if ((ID[i] != 0) || (name[i] != null) || (marks[i] != 0)) {
-                            StudentIO.printRow(ID[i], name[i], marks[i]);
+                            StudentIO.printRow(ID[i], name[i], endXmarks[i], midXmarks[i], hwMarks[i], marks[i]);
                         }
                     }
                     StudentIO.footer();
@@ -139,30 +148,28 @@ public class SchoolManagementSystem {
 
                 case 3 -> {
                     System.out.print("Enter the Student ID to search for: ");
-                    int stID = safeInt();
+                    int stID = SafeInputReader.intInput("Enter the Student ID to search for: ", 1, 1000);
                     System.out.println();
                     int index = indexSearch(stID);
                     if (index == -1) {
                         StudentIO.printNotFoundError(stID);
                     } else {
                         StudentIO.header("Student Found");
-                        StudentIO.printRow(ID[index], name[index], marks[index]);
+                        StudentIO.printRow(ID[index], name[index], endXmarks[index], midXmarks[index], hwMarks[index], marks[index]);
                         StudentIO.footer();
                     }
-
                 }
 
                 case 4 -> {
-                    System.out.print("Enter the Student ID to update: ");
-                    int stID = safeInt();
+
+                    int stID = SafeInputReader.intInput("Enter the Student ID to update: ", 1, 1000);
                     System.out.println();
                     int index = indexSearch(stID);
                     if (index == -1) {
                         System.out.println("Error: Student with ID:" + stID + " not found.");
                     } else {
-                        System.out.println("Found Student : " + name[index]+ "(Current Marks: " + marks[index]+ " )");
-                        System.out.print("Enter new marks: ");
-                        marks[index] = safeInt();
+                        System.out.println("Found Student : " + name[index] + "(Current Marks: " + marks[index] + " )");
+                        marks[index] = SafeInputReader.intInput("Enter new marks", 0, 100);
                         System.out.println();
                         System.out.println("Student marks updated successfully!");
                         System.out.println();
@@ -175,27 +182,7 @@ public class SchoolManagementSystem {
                     return;
                 }
             }
-
         }
-
-    }
-
-    public static int safeInt() {
-        Scanner input = new Scanner(System.in);
-        int number = 0;
-        boolean valid = false;
-
-        while (!valid) {
-            if (input.hasNextInt()) {
-                number = input.nextInt();
-                valid = true;
-            } else {
-                System.out.println("Required Integer");
-                input.next();
-            }
-        }
-
-        return number;
     }
 
     public static int indexSearch(int stID) {
