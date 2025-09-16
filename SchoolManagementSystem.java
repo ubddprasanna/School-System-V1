@@ -1,5 +1,6 @@
 
 import java.util.Scanner;
+import utils.AttendanceManager;
 import utils.GradeCalc;
 import utils.Greeter;
 import utils.SafeInputReader;
@@ -13,6 +14,7 @@ public class SchoolManagementSystem {
     static int[] midXmarks = new int[3];
     static int[] hwMarks = new int[3];
     static String[] name = new String[3];
+    static public String[][] attendance = new String[3][7];
 
     static double finalExamW = 0.6;
     static double midExamW = 0.3;
@@ -20,8 +22,8 @@ public class SchoolManagementSystem {
 
     public static void main(String[] args) {
         Greeter.sayHello();
-         menu();
-
+        createDummyData();
+        menu();
     }
 
     public static void menu() {
@@ -35,10 +37,11 @@ public class SchoolManagementSystem {
                     3. Library Management
                     4. Reports
                     5. Grading Scheme Configuration
+                    6. Attendance Management
                     0. Exit
                     """);
 
-            int userInput = SafeInputReader.intInput("Enter your choice: ", 0, 5);
+            int userInput = SafeInputReader.intInput("Enter your choice: ", 0, 6);
 
             switch (userInput) {
                 case 1 -> {
@@ -66,6 +69,10 @@ public class SchoolManagementSystem {
                         }
 
                     }
+                }
+
+                case 6 -> {
+                    attendance();
                 }
                 case 0 -> {
                     System.out.println("Thank you for using the School Management System. Goodbye!");
@@ -118,14 +125,14 @@ public class SchoolManagementSystem {
                                 endXmarks[i] = SafeInputReader.intInput("Enter Student Final Exam Marks: ", 0, 100);
                                 midXmarks[i] = SafeInputReader.intInput("Enter Student Mid Exam Marks: ", 0, 100);
                                 hwMarks[i] = SafeInputReader.intInput("Enter Student Homw work Marks: ", 0, 100);
-                                //marks[i] = (endXmarks[i] * finalExamW + midXmarks[i] * midExamW + hwMarks[i] * homeWorkW);
+                                // marks[i] = (endXmarks[i] * finalExamW + midXmarks[i] * midExamW + hwMarks[i]
+                                // * homeWorkW);
 
                                 int[] studentMarks = { endXmarks[i], midXmarks[i], hwMarks[i] };
 
                                 double[] marksWeighr = { finalExamW, midExamW, homeWorkW };
 
                                 marks[i] = GradeCalc.main(studentMarks, marksWeighr, hwMarks.length);
-
 
                                 System.out.println();
                                 break;
@@ -155,7 +162,8 @@ public class SchoolManagementSystem {
                         StudentIO.printNotFoundError(stID);
                     } else {
                         StudentIO.header("Student Found");
-                        StudentIO.printRow(ID[index], name[index], endXmarks[index], midXmarks[index], hwMarks[index], marks[index]);
+                        StudentIO.printRow(ID[index], name[index], endXmarks[index], midXmarks[index], hwMarks[index],
+                                marks[index]);
                         StudentIO.footer();
                     }
                 }
@@ -194,5 +202,62 @@ public class SchoolManagementSystem {
         }
         return index;
     }
+
+    public static void attendance() {
+        boolean valid = false;
+        while (!valid) {
+            System.out.println("--- Attendance Management ---");
+            System.out.println("""
+                    1. Mark Daily Attendance
+                    2. View Full Attendance Grid
+                    3. Get Student Attendance Report
+                    4. List Absentees for a Day
+                    0. Back to Main Menu
+                    """);
+            int userInput = SafeInputReader.intInput("Enter Your choice : ", 0, 4);
+
+            switch (userInput) {
+                case 1 -> {
+                    AttendanceManager.mark(ID, name, attendance);
+                }
+                case 2 -> {
+                    AttendanceManager.view(attendance, ID, name);
+                }
+                case 3 -> {
+                    AttendanceManager.search(ID, name, attendance);
+                }
+                case 4 -> {
+                }
+                case 0 -> {
+                    System.out.println("Braked");
+                    valid = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void createDummyData() {
+        ID[0] = 101;
+        ID[1] = 102;
+        ID[2] = 103;
+
+        name[0] = "Dil";
+        name[1] = "Ozz";
+        name[2] = "Bob";
+
+        endXmarks[0] = 85;
+        endXmarks[1] = 92;
+        endXmarks[2] = 78;
+
+        midXmarks[0] = 75;
+        midXmarks[1] = 88;
+        midXmarks[2] = 80;
+
+        hwMarks[0] = 95;
+        hwMarks[1] = 90;
+        hwMarks[2] = 85;
+    }
+
 
 }

@@ -26,14 +26,15 @@ public class SafeInputReader {
         }
         return number;
     }
-    public static double floatInput(String msg, double  min, double  max) {
+
+    public static double floatInput(String msg, double min, double max) {
         Scanner input = new Scanner(System.in);
         double number = 0;
         boolean valid = false;
         System.out.print(msg);
 
         while (!valid) {
-            if (input.hasNextDouble() || input.hasNextFloat() ) {
+            if (input.hasNextDouble() || input.hasNextFloat()) {
                 number = input.nextDouble();
                 if (min <= number && number <= max) {
                     valid = true;
@@ -49,7 +50,6 @@ public class SafeInputReader {
         }
         return number;
     }
-
 
     public static String strInput(String msg) {
         Scanner input = new Scanner(System.in);
@@ -73,6 +73,54 @@ public class SafeInputReader {
         return userInput;
     }
 
-    
+    public static boolean boolInput(String msg, String trueValue, String falseValue) {
+        Scanner input = new Scanner(System.in);
+        String userInput;
+        boolean valid = false;
+        boolean value = false;
+
+        while (!valid) {
+            System.out.print(msg);
+            userInput = input.next();
+            System.out.println();
+
+            if (userInput.equalsIgnoreCase(trueValue)) {
+                value = true;
+                valid = true;
+            } else if (userInput.equalsIgnoreCase(falseValue)) {
+                value = false;
+                valid = true;
+            } else {
+                System.out.println("Invalid Input. You need type " + trueValue + " or " + falseValue + "!");
+            }
+        }
+        System.out.println("All Students Attendance Marked");
+        return value;
+    }
+
+        public static String strBoolInput(String msg, String trueValue, String falseValue) {
+        Scanner input = new Scanner(System.in);
+        String userInput;
+        boolean valid = false;
+        String value = falseValue;
+
+        while (!valid) {
+            System.out.print(msg);
+            userInput = input.next();
+            System.out.println();
+
+            if (userInput.equalsIgnoreCase(trueValue)) {
+                value = trueValue;
+                valid = true;
+            } else if (userInput.equalsIgnoreCase(falseValue)) {
+                value = falseValue;
+                valid = true;
+            } else {
+                System.out.println("Invalid Input. You need type " + trueValue + " or " + falseValue + "!");
+            }
+        }
+        System.out.println("All Students Attendance Marked");
+        return value;
+    }
 
 }
