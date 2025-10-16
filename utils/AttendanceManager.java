@@ -60,7 +60,7 @@ public class AttendanceManager {
 
         int marked = 0;
         int unmarked = 0;
-        int present = 0 ;
+        int present = 0;
         int absent = 0;
 
         createMockAttendance(attendance);
@@ -78,7 +78,8 @@ public class AttendanceManager {
             System.out.println(
                     "+---------+---------------------+---------+---------+---------+---------+---------+");
 
-            System.out.printf("| %-7d | %-19s | %-7s | %-7s | %-7s | %-7s | %-7s |\n", ID[index], name[index], attendance[index][0],
+            System.out.printf("| %-7d | %-19s | %-7s | %-7s | %-7s | %-7s | %-7s |\n", ID[index], name[index],
+                    attendance[index][0],
                     attendance[index][1], attendance[index][2], attendance[index][3], attendance[index][4]);
 
             System.out.println(
@@ -89,22 +90,20 @@ public class AttendanceManager {
             for (int j = 0; j < attendance[index].length; j++) {
                 if (attendance[index][j] == null) {
                     unmarked++;
-                }
-                else if (attendance[index][j].equalsIgnoreCase("p")) {
-                    present++ ;
-                }
-                else if (attendance[index][j].equalsIgnoreCase("a")){
-                    absent++ ;
+                } else if (attendance[index][j].equalsIgnoreCase("p")) {
+                    present++;
+                } else if (attendance[index][j].equalsIgnoreCase("a")) {
+                    absent++;
                 }
 
             }
 
             marked = attendance[index].length - unmarked;
 
-            double presentage = (double) present / marked * 100 ;
+            double presentage = (double) present / marked * 100;
 
             System.out.println("Days Marked So Far: " + marked);
-            System.out.println("Days Present: " + present );
+            System.out.println("Days Present: " + present);
             System.out.println("Days Absent: " + absent);
             System.out.println("Attendance Percentage: " + presentage + "%");
 
@@ -112,6 +111,23 @@ public class AttendanceManager {
 
         }
 
+    }
+
+    public static void absentees(int[] ID, String[] name, String[][] attendance) {
+        createMockAttendance(attendance);
+        int date = SafeInputReader.intInput("Enter the day to check for absentees (1-5): ", 1, 5);
+        System.out.println();
+        System.out.println("--- Absentees on Day " + date + " ---");
+        for (int i = 0; i < ID.length; i++) {
+            if (attendance[i][date] == null) {
+                continue;
+            }
+            if (attendance[i][date].equalsIgnoreCase("A")) {
+                System.out.println("- " + name[i] + " (ID: " + ID[i] + " )");
+            }
+
+        }
+        System.out.println();
     }
 
     public static int indexSearch(int[] ID, int stID) {
