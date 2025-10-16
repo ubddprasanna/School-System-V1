@@ -49,8 +49,25 @@ public class SchoolManagementSystem {
                     students();
                 }
                 case 2 -> System.out.println("---Navigating to Teacher Management---");
-                case 3 -> System.out.println("---Navigating to Library Management---");
-                case 4 -> System.out.println("---Navigating to Library Reports---");
+                case 3 -> {
+                    System.out.println("---Navigating to Library Management---");
+                    System.err.println("""
+                        1. Add a New Book
+                        2. Borrow a Book
+                        3. Return a Book
+                        4. List All Books
+                        5. List Available Books
+                        0. Back to Main Menu
+                                    """);
+                    userInput = SafeInputReader.intInput("Enter your choice:", 1, 5);
+
+                    switch (userInput) {
+                        case 1 -> {
+                        }
+                    }
+
+                }
+                case 4 -> System.out.println("---Navigating to Reports---");
                 case 5 -> {
                     System.out.println("--- Grading Scheme Setup ---");
                     System.out.println(
@@ -227,6 +244,7 @@ public class SchoolManagementSystem {
                     AttendanceManager.search(ID, name, attendance);
                 }
                 case 4 -> {
+                    AttendanceManager.absentees(ID, name, attendance);
                 }
                 case 0 -> {
                     System.out.println("Braked");
@@ -258,6 +276,5 @@ public class SchoolManagementSystem {
         hwMarks[1] = 90;
         hwMarks[2] = 85;
     }
-
 
 }
